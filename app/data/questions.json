@@ -1,0 +1,170 @@
+[
+  {
+    "id": "business-location",
+    "name": "answers[business-location]",
+    "postion": 1,
+    "title": "Where is your business based?",
+    "type": "single",
+    "items": [
+      {
+        "value": "england",
+        "text": "England"
+      },
+      {
+        "value": "scotland",
+        "text": "Scotland"
+      },
+      {
+        "value": "wales",
+        "text": "Wales"
+      },
+      {
+        "value": "northern_ireland",
+        "text": "Northern Ireland"
+      }
+    ]
+  },
+  {
+    "id": "business-size",
+    "name": "answers[business-size]",
+    "postion": 2,
+    "title": "What size was your business as of 28 February?",
+    "type": "single",
+    "items": [
+      {
+        "value": "small_medium_enterprise",
+        "text": "Small or medium enterprise (SME): 0 to 249 employees."
+      },
+      {
+        "value": "large_enterprise",
+        "text": "Large enterprises: over 249 employees."
+      }
+    ]
+  },
+  {
+    "id": "self-employed",
+    "name": "answers[self-employed]",
+    "postion": 3,
+    "title": "Are you self-employed?",
+    "type": "single",
+    "items": [
+      {
+        "value": "yes",
+        "text": "Yes"
+      },
+      {
+        "value": "no",
+        "text": "No"
+      }
+    ]
+  },
+  {
+    "id": "annual-turnover",
+    "name": "answers[annual-turnover]",
+    "postion": 4,
+    "title": "What is your turnover per year?",
+    "type": "single",
+    "items": [
+      {
+        "value": "over_500m",
+        "text": "Over £500m"
+      },
+      {
+        "value": "over_45m",
+        "text": "Over £45m and under £500m"
+      },
+      {
+        "value": "over_85k",
+        "text": "Over £85,000 and under £45m"
+      },
+      {
+        "value": "under_85k",
+        "text": "Under £85,000 (ie not VAT registered)"
+      }
+    ]
+  },
+  {
+    "id": "business-rates",
+    "name": "answers[business-rates]",
+    "postion": 5,
+    "title": "Does your business pay business rates?",
+    "type": "single",
+    "items": [
+      {
+        "value": "yes",
+        "text": "Yes"
+      },
+      {
+        "value": "no",
+        "text": "No"
+      }
+    ]
+  },
+  {
+    "id": "non-domestic-property",
+    "name": "answers[non-domestic-property]",
+    "postion": 6,
+    "title": "Does your business have a non-domestic property with a rateable value of:",
+    "type": "single",
+    "items": [
+      {
+        "value": "over_51k",
+        "text": "Over £51,000"
+      },
+      {
+        "value": "over_15k",
+        "text": "Over £15,000 and under £51,000"
+      },
+      {
+        "value": "up_to_15k",
+        "text": "Up to £15,000"
+      },
+      {
+        "value": "none",
+        "text": "My business does not have a non-domestic property"
+      }
+    ]
+  },
+  {
+    "id": "self-assessment-payment",
+    "name": "answers[self-assessment-payment]",
+    "postion": 7,
+    "title": "Are you due to pay a self-assessment payment on account by 31 July 2020?",
+    "type": "single",
+    "items": [
+      {
+        "value": "yes",
+        "text": "Yes"
+      },
+      {
+        "value": "no",
+        "text": "No"
+      }
+    ]
+  },
+  {
+    "id": "business-sector",
+    "name": "answers[business-sector][]",
+    "postion": 8,
+    "title": "Is your business in any of the following sectors:",
+    "type": "multiple",
+    "items": [
+      {
+        "value": "retail",
+        "text": "Retail"
+      },
+      {
+        "value": "hospitality",
+        "text": "Hospitality"
+      },
+      {
+        "value": "leisure",
+        "text": "Leisure"
+      },
+      {
+        "value": "nurseries",
+        "text": "Nurseries"
+      }
+    ]
+  }
+]
