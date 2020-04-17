@@ -1,0 +1,50 @@
+
+{% extends "layout.html" %}
+
+{% block pageTitle %}
+  Support you may be entitled to
+{% endblock %}
+
+{% block beforeContent %}
+{% include "includes/phase-banner.html" %}
+{{ govukBackLink({
+  text: "Back",
+  href: actions.back
+}) if actions.back | length }}
+{% endblock %}
+
+{% block content %}
+
+{% include "./partials/_error-summary.html" %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl">
+      {{ serviceName }}
+    </h1>
+    
+    <h2 class="govuk-heading-m">Support you may be entitled to</h2>
+
+    <div class="app-c-govspeak">
+      
+      {%- for scheme in schemes %}
+        {%- if scheme.id in outcomes %}
+        <div class="call-to-action">
+          <h3 class="govuk-heading-s">{{ scheme.title }}</h3>
+          <p class="govuk-body">{{ scheme.description| safe }}</p>
+        </div>
+        {% endif -%}
+      {% endfor -%}
+    
+    </div>
+    
+    <p class="govuk-body">Please note that you may be eligible for more than one scheme.</p>
+
+    <p class="govuk-body">For detailed information about different types of business support schemes, check the <a class="govuk-link" href="https://www.gov.uk/coronavirus/business-support">coronavirus business support page</a>.</p>
+    
+    {% include "./partials/_question-summary.html" %}
+    
+  </div>
+</div>
+
+{% endblock %}

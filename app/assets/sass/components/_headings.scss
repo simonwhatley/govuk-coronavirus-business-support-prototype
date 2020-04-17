@@ -1,22 +1,22 @@
 // From https://github.com/alphagov/govuk_publishing_components/blob/master/app/assets/stylesheets/govuk_publishing_components/components/_heading.scss
 
-.gem-c-heading {
+.app-c-heading {
   @include govuk-text-colour;
   @include govuk-font(27, $weight: bold);
   margin: 0;
 }
 
-.gem-c-heading--font-size-24 {
+.app-c-heading--font-size-24 {
   @include govuk-font(24, $weight: bold);
 }
 
-.gem-c-heading--font-size-19 {
+.app-c-heading--font-size-19 {
   @include govuk-font(19, $weight: bold);
 }
 
 // special case for publications and consultations pages
 // separated to allow normalisation of the component for wider use
-.gem-c-heading--mobile-top-margin {
+.app-c-heading--mobile-top-margin {
   margin-top: govuk-spacing(6);
   margin-bottom: govuk-spacing(3);
 
@@ -26,27 +26,27 @@
   }
 }
 
-.gem-c-heading--padding {
+.app-c-heading--padding {
   padding: govuk-spacing(3) 0;
 }
 
 // border color will default to black
 // can be changed using the branding functionality
-.gem-c-heading--border-top-1 {
+.app-c-heading--border-top-1 {
   border-top-style: solid;
   border-top-width: 1px;
 }
 
-.gem-c-heading--border-top-2 {
+.app-c-heading--border-top-2 {
   border-top-style: solid;
   border-top-width: 2px;
 }
 
-.gem-c-heading--border-top-5 {
+.app-c-heading--border-top-5 {
   border-top-style: solid;
   border-top-width: 5px;
 }
 
-.gem-c-heading--inverse {
+.app-c-heading--inverse {
   color: govuk-colour("white");
 }

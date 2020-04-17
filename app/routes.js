@@ -4,6 +4,8 @@ const express = require('express');
 const router = express.Router();
 
 const Questions = require('./models/questions');
+const Schemes = require('./models/schemes');
+const Outcomes = require('./models/outcomes');
 
 // function checkHasAnswers(req, res, next) {
 //   if (req.session.data.answers === undefined) {
@@ -12,6 +14,14 @@ const Questions = require('./models/questions');
 //     next();
 //   }
 // }
+
+function changeLinks(req) {
+  const links = {
+    businessLocation: req.baseUrl + '/business-location',
+    businessSize: req.baseUrl + '/business-size'
+  }
+  return links;
+}
 
 // --------------------------------------------------
 // Start
@@ -31,9 +41,6 @@ router.get('/', (req, res) => {
 // --------------------------------------------------
 router.get('/business-location', (req, res) => {
   
-  console.log(req.headers.referer);
-  // console.log(req._parsedUrl);
-  
   if (req.session.data.answers === undefined) {
     req.session.data.answers = {};
   }
@@ -50,8 +57,6 @@ router.get('/business-location', (req, res) => {
 
 router.post('/business-location', (req, res) => {
   
-  let next = req.baseUrl + '/business-location';
-  
   let errors = [];
   
   if (req.session.data.answers['business-location'] === undefined) {
@@ -67,7 +72,7 @@ router.post('/business-location', (req, res) => {
       question: Questions.question('business-location', req.session.data.answers['business-location']),
       errors: errors,
       actions: {
-        save: next,
+        save: req.baseUrl + '/business-location',
         back: req.baseUrl + '/',
         start: req.baseUrl + '/business-location'
       }
@@ -93,9 +98,7 @@ router.get('/business-size', (req, res) => {
 });
 
 router.post('/business-size', (req, res) => {
-  
-  let next = req.baseUrl + '/business-size';
-  
+    
   let errors = [];
   
   if (req.session.data.answers['business-size'] === undefined) {
@@ -111,7 +114,7 @@ router.post('/business-size', (req, res) => {
       question: Questions.question('business-size', req.session.data.answers['business-size']),
       errors: errors,
       actions: {
-        save: next,
+        save: req.baseUrl + '/business-size',
         back: req.baseUrl + '/business-location',
         start: req.baseUrl + '/business-location'
       }
@@ -137,9 +140,7 @@ router.get('/self-employed', (req, res) => {
 });
 
 router.post('/self-employed', (req, res) => {
-  
-  let next = req.baseUrl + '/self-employed';
-  
+    
   let errors = [];
   
   if (req.session.data.answers['self-employed'] === undefined) {
@@ -155,7 +156,7 @@ router.post('/self-employed', (req, res) => {
       question: Questions.question('self-employed', req.session.data.answers['self-employed']),
       errors: errors,
       actions: {
-        save: next,
+        save: req.baseUrl + '/self-employed',
         back: req.baseUrl + '/business-size',
         start: req.baseUrl + '/business-location'
       }
@@ -181,9 +182,7 @@ router.get('/annual-turnover', (req, res) => {
 });
 
 router.post('/annual-turnover', (req, res) => {
-  
-  let next = req.baseUrl + '/annual-turnover';
-  
+    
   let errors = [];
   
   if (req.session.data.answers['annual-turnover'] === undefined) {
@@ -199,7 +198,7 @@ router.post('/annual-turnover', (req, res) => {
       question: Questions.question('annual-turnover', req.session.data.answers['annual-turnover']),
       errors: errors,
       actions: {
-        save: next,
+        save: req.baseUrl + '/annual-turnover',
         back: req.baseUrl + '/self-employed',
         start: req.baseUrl + '/business-location'
       }
@@ -225,9 +224,7 @@ router.get('/business-rates', (req, res) => {
 });
 
 router.post('/business-rates', (req, res) => {
-  
-  let next = req.baseUrl + '/business-rates';
-  
+    
   let errors = [];
   
   if (req.session.data.answers['business-rates'] === undefined) {
@@ -243,7 +240,7 @@ router.post('/business-rates', (req, res) => {
       question: Questions.question('business-rates', req.session.data.answers['business-rates']),
       errors: errors,
       actions: {
-        save: next,
+        save: req.baseUrl + '/business-rates',
         back: req.baseUrl + '/annual-turnover',
         start: req.baseUrl + '/business-location'
       }
@@ -269,9 +266,7 @@ router.get('/non-domestic-property', (req, res) => {
 });
 
 router.post('/non-domestic-property', (req, res) => {
-  
-  let next = req.baseUrl + '/non-domestic-property';
-  
+    
   let errors = [];
   
   if (req.session.data.answers['non-domestic-property'] === undefined) {
@@ -287,7 +282,7 @@ router.post('/non-domestic-property', (req, res) => {
       question: Questions.question('non-domestic-property', req.session.data.answers['non-domestic-property']),
       errors: errors,
       actions: {
-        save: next,
+        save: req.baseUrl + '/non-domestic-property',
         back: req.baseUrl + '/business-rates',
         start: req.baseUrl + '/business-location'
       }
@@ -314,9 +309,7 @@ router.get('/self-assessment-payment', (req, res) => {
 });
 
 router.post('/self-assessment-payment', (req, res) => {
-  
-  let next = req.baseUrl + '/self-assessment-payment';
-  
+    
   let errors = [];
   
   if (req.session.data.answers['self-assessment-payment'] === undefined) {
@@ -332,7 +325,7 @@ router.post('/self-assessment-payment', (req, res) => {
       question: Questions.question('self-assessment-payment', req.session.data.answers['self-assessment-payment']),
       errors: errors,
       actions: {
-        save: next,
+        save: req.baseUrl + '/self-assessment-payment',
         back: req.baseUrl + '/non-domestic-property',
         start: req.baseUrl + '/business-location'
       }
@@ -358,9 +351,7 @@ router.get('/business-sector', (req, res) => {
 });
 
 router.post('/business-sector', (req, res) => {
-  
-  let next = req.baseUrl + '/business-sector';
-  
+    
   let errors = [];
   
   if (!req.session.data.answers['business-sector'].length) {
@@ -376,13 +367,13 @@ router.post('/business-sector', (req, res) => {
       question: Questions.question('business-sector', req.session.data.answers['business-sector']),
       errors: errors,
       actions: {
-        save: next,
+        save: req.baseUrl + '/business-sector',
         back: req.baseUrl + '/self-assessment-payment',
         start: req.baseUrl + '/business-location'
       }
     });
   } else {
-    res.redirect(req.baseUrl + '/answers');
+    res.redirect(req.baseUrl + '/results');
   }  
   
 });
@@ -390,13 +381,17 @@ router.post('/business-sector', (req, res) => {
 // --------------------------------------------------
 // answerss 
 // --------------------------------------------------
-router.get('/answers', (req, res) => {
-  res.render('answers', {
+router.get('/results', (req, res) => {
+  
+  res.render('results', {
+    schemes: Schemes.find(),
+    outcomes: Outcomes.find(req.session.data.answers),
     actions: {
       start: req.baseUrl + '/business-location',
       back: req.baseUrl + '/business-sector'
     }
   });
+  
 });
 
 // --------------------------------------------------
