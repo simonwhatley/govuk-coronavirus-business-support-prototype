@@ -31,7 +31,7 @@
         {%- if scheme.id in outcomes %}
         <div class="call-to-action">
           <h3 class="govuk-heading-s">{{ scheme.title }}</h3>
-          <p class="govuk-body">{{ scheme.description| safe }}</p>
+          {{ scheme.description | safe }}
         </div>
         {% endif -%}
       {% endfor -%}

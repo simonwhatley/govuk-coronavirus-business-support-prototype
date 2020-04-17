@@ -20,7 +20,8 @@ exports.find = function(answers) {
   // self_assessment_payments
   // --------------------------------------------------
   
-  if (answers['self-employed'] == 'yes' && answers['self-assessment-payment'] == 'yes') {
+  if (answers['self-employed'] == 'yes' 
+      && answers['self-assessment-payment'] == 'yes') {
     outcomes.push('self_assessment_payments');
   }
   
@@ -28,7 +29,8 @@ exports.find = function(answers) {
   // statutory_sick_rebate
   // --------------------------------------------------
   
-  if (answers['business-size'] == '0_to_249' && answers['self-assessment-payment'] == 'yes') {
+  if (answers['business-size'] == '0_to_249' 
+      && answers['self-assessment-payment'] == 'yes') {
     outcomes.push('statutory_sick_rebate');
   }
   
@@ -44,9 +46,11 @@ exports.find = function(answers) {
   // retail_hospitality_leisure_business_rates
   // --------------------------------------------------
   
-  // TODO: sectors – retail, hospitality and leisure
-  
-  if (answers['business-location'] == 'england' && answers['non-domestic-property'] != 'none') {
+  if (answers['business-location'] == 'england' 
+      && answers['non-domestic-property'] != 'none'
+      && (answers['business-sector'].indexOf('retail') !== -1
+      || answers['business-sector'].indexOf('hospitality') !== -1
+      || answers['business-sector'].indexOf('leisure') !== -1)) {
     outcomes.push('retail_hospitality_leisure_business_rates');
   }
   
@@ -54,19 +58,21 @@ exports.find = function(answers) {
   // retail_hospitality_leisure_grant_funding
   // --------------------------------------------------
   
-  // TODO: sectors – retail, hospitality and leisure
-  
-  if (answers['business-location'] == 'england' && answers['non-domestic-property'] == '51k_and_over') {
+  if (answers['business-location'] == 'england' 
+      && answers['non-domestic-property'] == '51k_and_over'
+      && (answers['business-sector'].indexOf('retail') !== -1
+      || answers['business-sector'].indexOf('hospitality') !== -1
+      || answers['business-sector'].indexOf('leisure') !== -1)) {
     outcomes.push('retail_hospitality_leisure_grant_funding');
   }  
   
   // --------------------------------------------------
   // nursery_support
   // --------------------------------------------------
-  
-  // TODO: sectors – nursery
-  
-  if (answers['business-location'] == 'england' && answers['non-domestic-property'] != 'none') {
+    
+  if (answers['business-location'] == 'england' 
+      && answers['non-domestic-property'] != 'none' 
+      && answers['business-sector'].indexOf('nurseries') !== -1) {
     outcomes.push('nursery_support');
   }  
   
@@ -75,7 +81,9 @@ exports.find = function(answers) {
   // small_business_grant_funding
   // --------------------------------------------------
   
-  if (answers['business-location'] == 'england' && answers['business-size'] == '0_to_249' && answers['non-domestic-property'] == 'under_51k') {
+  if (answers['business-location'] == 'england' 
+      && answers['business-size'] == '0_to_249' 
+      && answers['non-domestic-property'] == 'under_51k') {
     outcomes.push('small_business_grant_funding');
   }  
   
@@ -99,6 +107,7 @@ exports.find = function(answers) {
   // time_to_pay_service
   // --------------------------------------------------
   
+  outcomes.push('time_to_pay_service');
   
   
   return outcomes;
