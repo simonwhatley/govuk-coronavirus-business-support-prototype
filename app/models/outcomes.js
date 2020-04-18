@@ -8,6 +8,8 @@ exports.find = function(answers) {
   // job_retention_scheme
   // --------------------------------------------------
   
+  outcomes.push('job_retention_scheme');
+  
   // --------------------------------------------------
   // vat_scheme
   // --------------------------------------------------
@@ -29,7 +31,7 @@ exports.find = function(answers) {
   // statutory_sick_rebate
   // --------------------------------------------------
   
-  if (answers['business-size'] == '0_to_249' 
+  if (answers['business-size'] == 'small_medium_enterprise' 
       && answers['self-assessment-payment'] == 'yes') {
     outcomes.push('statutory_sick_rebate');
   }
@@ -38,7 +40,7 @@ exports.find = function(answers) {
   // self_employed_income_scheme
   // --------------------------------------------------
   
-  if (answers['business-size'] == '0_to_249') {
+  if (answers['business-size'] == 'small_medium_enterprise') {
     outcomes.push('self_employed_income_scheme');
   }
   
@@ -59,7 +61,7 @@ exports.find = function(answers) {
   // --------------------------------------------------
   
   if (answers['business-location'] == 'england' 
-      && answers['non-domestic-property'] == '51k_and_over'
+      && answers['non-domestic-property'] == 'over_51k'
       && (answers['business-sector'].indexOf('retail') !== -1
       || answers['business-sector'].indexOf('hospitality') !== -1
       || answers['business-sector'].indexOf('leisure') !== -1)) {
@@ -82,8 +84,8 @@ exports.find = function(answers) {
   // --------------------------------------------------
   
   if (answers['business-location'] == 'england' 
-      && answers['business-size'] == '0_to_249' 
-      && answers['non-domestic-property'] == 'under_51k') {
+      && answers['business-size'] == 'small_medium_enterprise' 
+      && answers['non-domestic-property'] != 'over_51k') {
     outcomes.push('small_business_grant_funding');
   }  
   
@@ -91,7 +93,7 @@ exports.find = function(answers) {
   // business_loan_scheme
   // --------------------------------------------------
   
-  if (answers['annual-turnover'] == 'under_85k' || answers['annual-turnover'] == '85k_to_45m') {
+  if (answers['annual-turnover'] == 'under_85k' || answers['annual-turnover'] == 'over_85k') {
     outcomes.push('business_loan_scheme');
   }  
   
@@ -99,7 +101,7 @@ exports.find = function(answers) {
   // large_business_loan_scheme
   // --------------------------------------------------
   
-  if (answers['annual-turnover'] == '45m_to_500m') {
+  if (answers['annual-turnover'] == 'over_45m') {
     outcomes.push('business_loan_scheme');
   }  
   
