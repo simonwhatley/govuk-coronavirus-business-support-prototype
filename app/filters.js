@@ -3,6 +3,7 @@ const moment = require('moment');
 moment.suppressDeprecationWarnings = true;
 
 const numeral = require('numeral');
+const marked = require('marked');
 
 const questions = require('./data/questions.json');
 
@@ -134,6 +135,18 @@ module.exports = function (env) {
       return answerList;
     }
     
+  }
+  
+  /* ------------------------------------------------------------------
+    utility function to create HTML from markdown
+    example: {{ "**Enter a title**" | markdownToHtml }}
+    outputs: "Enter a title"
+  ------------------------------------------------------------------ */
+  filters.markdownToHtml = function(markdown) {
+    if (!markdown)
+      return null;
+
+    return html = marked(markdown);
   }
   
   /*

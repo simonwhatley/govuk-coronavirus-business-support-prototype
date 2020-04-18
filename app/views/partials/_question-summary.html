@@ -42,17 +42,6 @@
     ] if data.answers['business-size'] | length,
     [
       {
-        text: "Are you self-employed?"
-      },
-      {
-        text: data.answers['self-employed'] | getAnswerAsString('self-employed')
-      },
-      {
-        html: '<a class="govuk-link no-visited-state" href="/self-employed">Change <span class="govuk-visually-hidden">whether you are self-employed</span></a>'
-      }
-    ] if data.answers['self-employed'] | length,
-    [
-      {
         text: "What is your turnover per year?"
       },
       {
@@ -64,18 +53,29 @@
     ] if data.answers['annual-turnover'] | length,
     [
       {
-        text: "Does your business pay business rates?"
+        text: "Are you an employer with a PAYE scheme?"
       },
       {
-        text: data.answers['business-rates'] | getAnswerAsString('business-rates')
+        text: data.answers['paye-scheme'] | getAnswerAsString('paye-scheme')
       },
       {
-        html: '<a class="govuk-link no-visited-state" href="/business-rates">Change <span class="govuk-visually-hidden">whether your business pays business rates</span></a>'
+        html: '<a class="govuk-link no-visited-state" href="/paye-scheme">Change <span class="govuk-visually-hidden">whether your are an employer with a PAYE scheme</span></a>'
       }
-    ] if data.answers['business-rates'] | length,
+    ] if data.answers['paye-scheme'] | length,
     [
       {
-        text: "Does your business have a non-domestic property with a rateable value of:"
+        text: "Are you self-employed?"
+      },
+      {
+        text: data.answers['self-employed'] | getAnswerAsString('self-employed')
+      },
+      {
+        html: '<a class="govuk-link no-visited-state" href="/self-employed">Change <span class="govuk-visually-hidden">whether you are self-employed</span></a>'
+      }
+    ] if data.answers['self-employed'] | length,
+    [
+      {
+        text: "What is the rateable value of your business' non-domestic property?"
       },
       {
         text: data.answers['non-domestic-property'] | getAnswerAsString('non-domestic-property')
@@ -105,6 +105,17 @@
       {
         html: '<a class="govuk-link no-visited-state" href="/business-sector">Change <span class="govuk-visually-hidden">whether your business is in a sector</span></a>'
       }
-    ] if data.answers['business-sector'] | length
+    ] if data.answers['business-sector'] | length,
+    [
+      {
+        text: "Is your business in receipt of small business rate relief or rural rate relief as of the 11 March 2020?"
+      },
+      {
+        text: data.answers['rate-relief'] | getAnswerAsString('rate-relief')
+      },
+      {
+        html: '<a class="govuk-link no-visited-state" href="/business-sector">Change <span class="govuk-visually-hidden">whether your business is in receipt of small business rate relief or rural rate relief as of the 11 March 2020</span></a>'
+      }
+    ] if data.answers['rate-relief'] | length
   ]
 }) }}

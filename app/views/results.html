@@ -25,16 +25,35 @@
     
     <h2 class="govuk-heading-m">Support you may be entitled to</h2>
 
-    <div class="app-c-govspeak">
+    <div class="app-c-govspeak app-c-markdown">
       
       {%- for scheme in schemes %}
         {%- if scheme.id in outcomes %}
         <div class="call-to-action">
-          <h3 class="govuk-heading-s">{{ scheme.title }}</h3>
-          {{ scheme.description | safe }}
+          {{ scheme.description | markdownToHtml | safe }}
         </div>
         {% endif -%}
       {% endfor -%}
+      
+      {%- if data.answers['business-location'] == "scotland" %}
+      <div class="call-to-action">
+        <p class="govuk-body">
+          Find out <a class="govuk-link" href="https://findbusinesssupport.gov.scot/coronavirus-advice">what support is available in Scotland</a>. You can be eligible for both Scottish and UK-wide schemes.
+        </p>
+      </div>
+      {% elif data.answers['business-location'] == "wales" %}
+      <div class="call-to-action">
+        <p class="govuk-body">
+          Find out <a class="govuk-link" href="https://businesswales.gov.wales/coronavirus-advice">what support is available in Wales</a>. You can be eligible for both Welsh and UK-wide schemes.
+        </p>
+      </div>
+      {% elif data.answers['business-location'] == "northern_ireland" %}
+      <div class="call-to-action">
+        <p class="govuk-body">
+          Find out <a class="govuk-link" href="https://www.nibusinessinfo.co.uk/business-support/coronavirus">what support is available in Northern Ireland</a>. You can be eligible for both Northern Ireland and UK-wide schemes.
+        </p>
+      </div>
+      {% endif -%}
     
     </div>
     

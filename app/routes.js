@@ -15,14 +15,6 @@ const Outcomes = require('./models/outcomes');
 //   }
 // }
 
-function changeLinks(req) {
-  const links = {
-    businessLocation: req.baseUrl + '/business-location',
-    businessSize: req.baseUrl + '/business-size'
-  }
-  return links;
-}
-
 // --------------------------------------------------
 // Start
 // --------------------------------------------------
@@ -37,7 +29,7 @@ router.get('/', (req, res) => {
 });
 
 // --------------------------------------------------
-// Q1: Where is your business based?
+// Q: Where is your business based?
 // --------------------------------------------------
 router.get('/business-location', (req, res) => {
   
@@ -84,7 +76,7 @@ router.post('/business-location', (req, res) => {
 });
 
 // --------------------------------------------------
-// Q2: What size was your business as of 28 February?
+// Q: What size was your business as of 28 February?
 // --------------------------------------------------
 router.get('/business-size', (req, res) => {
   res.render('question', {
@@ -120,62 +112,20 @@ router.post('/business-size', (req, res) => {
       }
     });
   } else {
-    res.redirect(req.baseUrl + '/self-employed');
-  }  
-  
-});
-
-// --------------------------------------------------
-// Q3: Are you self-employed?
-// --------------------------------------------------
-router.get('/self-employed', (req, res) => {
-  res.render('question', {
-    question: Questions.question('self-employed', req.session.data.answers['self-employed']),
-    actions: {
-      save: req.baseUrl + '/self-employed',
-      back: req.baseUrl + '/business-size',
-      start: req.baseUrl + '/business-location'
-    }
-  });
-});
-
-router.post('/self-employed', (req, res) => {
-    
-  let errors = [];
-  
-  if (req.session.data.answers['self-employed'] === undefined) {
-    let error = {};
-    error.fieldName = 'self-employed';
-    error.href = '#self-employed';
-    error.text = 'Choose whether you are self-employed';
-    errors.push(error);
-  }
-  
-  if (errors.length) {
-    res.render('question', {
-      question: Questions.question('self-employed', req.session.data.answers['self-employed']),
-      errors: errors,
-      actions: {
-        save: req.baseUrl + '/self-employed',
-        back: req.baseUrl + '/business-size',
-        start: req.baseUrl + '/business-location'
-      }
-    });
-  } else {
     res.redirect(req.baseUrl + '/annual-turnover');
   }  
   
 });
 
 // --------------------------------------------------
-// Q4: What is your turnover per year?
+// Q: What is your turnover per year?
 // --------------------------------------------------
 router.get('/annual-turnover', (req, res) => {
   res.render('question', {
     question: Questions.question('annual-turnover', req.session.data.answers['annual-turnover']),
     actions: {
       save: req.baseUrl + '/annual-turnover',
-      back: req.baseUrl + '/self-employed',
+      back: req.baseUrl + '/business-size',
       start: req.baseUrl + '/business-location'
     }
   });
@@ -199,49 +149,91 @@ router.post('/annual-turnover', (req, res) => {
       errors: errors,
       actions: {
         save: req.baseUrl + '/annual-turnover',
-        back: req.baseUrl + '/self-employed',
+        back: req.baseUrl + '/business-size',
         start: req.baseUrl + '/business-location'
       }
     });
   } else {
-    res.redirect(req.baseUrl + '/business-rates');
+    res.redirect(req.baseUrl + '/paye-scheme');
   }  
   
 });
 
 // --------------------------------------------------
-// Q5: Does your business pay business rates?
+// Q: Are you an employer with a PAYE scheme?
 // --------------------------------------------------
-router.get('/business-rates', (req, res) => {
+router.get('/paye-scheme', (req, res) => {
   res.render('question', {
-    question: Questions.question('business-rates', req.session.data.answers['business-rates']),
+    question: Questions.question('paye-scheme', req.session.data.answers['paye-scheme']),
     actions: {
-      save: req.baseUrl + '/',
+      save: req.baseUrl + '/paye-scheme',
       back: req.baseUrl + '/annual-turnover',
       start: req.baseUrl + '/business-location'
     }
   });
 });
 
-router.post('/business-rates', (req, res) => {
+router.post('/paye-scheme', (req, res) => {
     
   let errors = [];
   
-  if (req.session.data.answers['business-rates'] === undefined) {
+  if (req.session.data.answers['paye-scheme'] === undefined) {
     let error = {};
-    error.fieldName = 'business-rates';
-    error.href = '#business-rates';
-    error.text = 'Choose whether your business pays business rates';
+    error.fieldName = 'paye-scheme';
+    error.href = '#annual-turnover';
+    error.text = 'Choose whether you are an employer with a PAYE scheme';
     errors.push(error);
   }
   
   if (errors.length) {
     res.render('question', {
-      question: Questions.question('business-rates', req.session.data.answers['business-rates']),
+      question: Questions.question('paye-scheme', req.session.data.answers['paye-scheme']),
       errors: errors,
       actions: {
-        save: req.baseUrl + '/business-rates',
+        save: req.baseUrl + '/paye-scheme',
         back: req.baseUrl + '/annual-turnover',
+        start: req.baseUrl + '/business-location'
+      }
+    });
+  } else {
+    res.redirect(req.baseUrl + '/self-employed');
+  }  
+  
+});
+
+// --------------------------------------------------
+// Q: Are you self-employed?
+// --------------------------------------------------
+router.get('/self-employed', (req, res) => {
+  res.render('question', {
+    question: Questions.question('self-employed', req.session.data.answers['self-employed']),
+    actions: {
+      save: req.baseUrl + '/self-employed',
+      back: req.baseUrl + '/paye-scheme',
+      start: req.baseUrl + '/business-location'
+    }
+  });
+});
+
+router.post('/self-employed', (req, res) => {
+    
+  let errors = [];
+  
+  if (req.session.data.answers['self-employed'] === undefined) {
+    let error = {};
+    error.fieldName = 'self-employed';
+    error.href = '#self-employed';
+    error.text = 'Choose whether you are self-employed';
+    errors.push(error);
+  }
+  
+  if (errors.length) {
+    res.render('question', {
+      question: Questions.question('self-employed', req.session.data.answers['self-employed']),
+      errors: errors,
+      actions: {
+        save: req.baseUrl + '/self-employed',
+        back: req.baseUrl + '/paye-scheme',
         start: req.baseUrl + '/business-location'
       }
     });
@@ -252,14 +244,14 @@ router.post('/business-rates', (req, res) => {
 });
 
 // --------------------------------------------------
-// Q6: Does your business have non-domestic property?
+// Q: Does your business have non-domestic property?
 // --------------------------------------------------
 router.get('/non-domestic-property', (req, res) => {
   res.render('question', {
     question: Questions.question('non-domestic-property', req.session.data.answers['non-domestic-property']),
     actions: {
       save: req.baseUrl + '/non-domestic-property',
-      back: req.baseUrl + '/business-rates',
+      back: req.baseUrl + '/self-employed',
       start: req.baseUrl + '/business-location'
     }
   });
@@ -283,18 +275,24 @@ router.post('/non-domestic-property', (req, res) => {
       errors: errors,
       actions: {
         save: req.baseUrl + '/non-domestic-property',
-        back: req.baseUrl + '/business-rates',
+        back: req.baseUrl + '/self-employed',
         start: req.baseUrl + '/business-location'
       }
     });
   } else {
-    res.redirect(req.baseUrl + '/self-assessment-payment');
+    
+    if (req.session.data.answers['non-domestic-property'] == 'none') {
+      res.redirect(req.baseUrl + '/business-sectors');
+    } else {
+      res.redirect(req.baseUrl + '/self-assessment-payment');
+    }   
+    
   }  
   
 });
 
 // --------------------------------------------------
-// Q7: Are you due to pay a self-assessment payment 
+// Q: Are you due to pay a self-assessment payment 
 // on account by 31 July 2020?
 // --------------------------------------------------
 router.get('/self-assessment-payment', (req, res) => {
@@ -331,20 +329,20 @@ router.post('/self-assessment-payment', (req, res) => {
       }
     });
   } else {
-    res.redirect(req.baseUrl + '/business-sector');
+    res.redirect(req.baseUrl + '/results');
   }  
   
 });
 
 // --------------------------------------------------
-// Q8: What sector is your business in?
+// Q: What sector is your business in?
 // --------------------------------------------------
 router.get('/business-sector', (req, res) => {
   res.render('question', {
     question: Questions.question('business-sector', req.session.data.answers['business-sector']),
     actions: {
       save: req.baseUrl + '/business-sector',
-      back: req.baseUrl + '/self-assessment-payment',
+      back: req.baseUrl + '/non-domestic-property',
       start: req.baseUrl + '/business-location'
     }
   });
@@ -354,7 +352,8 @@ router.post('/business-sector', (req, res) => {
     
   let errors = [];
   
-  if (!req.session.data.answers['business-sector'].length) {
+  // if (!req.session.data.answers['business-sector'].length) {
+  if (req.session.data.answers['business-sector'] === undefined) {
     let error = {};
     error.fieldName = 'business-sector';
     error.href = '#business-sector';
@@ -368,27 +367,76 @@ router.post('/business-sector', (req, res) => {
       errors: errors,
       actions: {
         save: req.baseUrl + '/business-sector',
-        back: req.baseUrl + '/self-assessment-payment',
+        back: req.baseUrl + '/non-domestic-property',
+        start: req.baseUrl + '/business-location'
+      }
+    });
+  } else {
+    res.redirect(req.baseUrl + '/rate-relief');
+  }  
+  
+});
+
+// --------------------------------------------------
+// Q: Is your business in receipt of small business 
+// rate relief or rural rate relief as of the 11 March 
+// 2020?
+// --------------------------------------------------
+router.get('/rate-relief', (req, res) => {
+  res.render('question', {
+    question: Questions.question('rate-relief', req.session.data.answers['rate-relief']),
+    actions: {
+      save: req.baseUrl + '/',
+      back: req.baseUrl + '/business-sector',
+      start: req.baseUrl + '/business-location'
+    }
+  });
+});
+
+router.post('/rate-relief', (req, res) => {
+
+  let errors = [];
+
+  if (req.session.data.answers['rate-relief'] === undefined) {
+    let error = {};
+    error.fieldName = 'rate-relief';
+    error.href = '#rate-relief';
+    error.text = 'Choose whether your business is in receipt of small business rate relief or rural rate relief as of the 11 March 2020';
+    errors.push(error);
+  }
+
+  if (errors.length) {
+    res.render('question', {
+      question: Questions.question('rate-relief', req.session.data.answers['rate-relief']),
+      errors: errors,
+      actions: {
+        save: req.baseUrl + '/rate-relief',
+        back: req.baseUrl + '/business-sector',
         start: req.baseUrl + '/business-location'
       }
     });
   } else {
     res.redirect(req.baseUrl + '/results');
   }  
-  
+
 });
 
 // --------------------------------------------------
-// answerss 
+// results 
 // --------------------------------------------------
 router.get('/results', (req, res) => {
+  
+  let back = req.baseUrl + '/self-assessment-payment'
+  if (req.session.data.answers['non-domestic-property'] == 'none') {
+    back = req.baseUrl + '/rate-relief';
+  }  
   
   res.render('results', {
     schemes: Schemes.find(),
     outcomes: Outcomes.find(req.session.data.answers),
     actions: {
       start: req.baseUrl + '/business-location',
-      back: req.baseUrl + '/business-sector'
+      back: back
     }
   });
   
