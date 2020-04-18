@@ -1,0 +1,110 @@
+<h2 class="govuk-heading-m">Previous answers</h2>
+
+<p class="govuk-body">
+  <a class="govuk-link govuk-link--no-visited-state" href="{{ actions.start }}">Start again</a>
+</p>
+
+{{ govukTable({
+  firstCellIsHeader: false,
+  head: [
+    {
+      text: "Question"
+    },
+    {
+      text: "Answer"
+    },
+    {
+      text: "Change answer"
+    }
+  ],
+  rows: [
+    [
+      {
+        text: "Where is your business based?"
+      },
+      {
+        text: data.answers['business-location'] | getAnswerAsString('business-location')
+      },
+      {
+        html: '<a class="govuk-link no-visited-state" href="/business-location">Change <span class="govuk-visually-hidden">where your business is based</span></a>'
+      }
+    ] if data.answers['business-location'] | length,
+    [
+      {
+        text: "What size was your business as of 28 February?"
+      },
+      {
+        text: data.answers['business-size'] | getAnswerAsString('business-size')
+      },
+      {
+        html: '<a class="govuk-link no-visited-state" href="/business-size">Change <span class="govuk-visually-hidden">what size your business was as of 28 February</span></a>'
+      }
+    ] if data.answers['business-size'] | length,
+    [
+      {
+        text: "Are you self-employed?"
+      },
+      {
+        text: data.answers['self-employed'] | getAnswerAsString('self-employed')
+      },
+      {
+        html: '<a class="govuk-link no-visited-state" href="/self-employed">Change <span class="govuk-visually-hidden">whether you are self-employed</span></a>'
+      }
+    ] if data.answers['self-employed'] | length,
+    [
+      {
+        text: "What is your turnover per year?"
+      },
+      {
+        text: data.answers['annual-turnover'] | getAnswerAsString('annual-turnover')
+      },
+      {
+        html: '<a class="govuk-link no-visited-state" href="/annual-turnover">Change <span class="govuk-visually-hidden">the value of your turnover per year</span></a>'
+      }
+    ] if data.answers['annual-turnover'] | length,
+    [
+      {
+        text: "Does your business pay business rates?"
+      },
+      {
+        text: data.answers['business-rates'] | getAnswerAsString('business-rates')
+      },
+      {
+        html: '<a class="govuk-link no-visited-state" href="/business-rates">Change <span class="govuk-visually-hidden">whether your business pays business rates</span></a>'
+      }
+    ] if data.answers['business-rates'] | length,
+    [
+      {
+        text: "Does your business have a non-domestic property with a rateable value of:"
+      },
+      {
+        text: data.answers['non-domestic-property'] | getAnswerAsString('non-domestic-property')
+      },
+      {
+        html: '<a class="govuk-link no-visited-state" href="/non-domestic-property">Change <span class="govuk-visually-hidden">whether your business has a non-domestic property with a rateable value</span></a>'
+      }
+    ] if data.answers['non-domestic-property'] | length,
+    [
+      {
+        text: "Are you due to pay a self-assessment payment on account by 31 July 2020?"
+      },
+      {
+        text: data.answers['self-assessment-payment'] | getAnswerAsString('self-assessment-payment')
+      },
+      {
+        html: '<a class="govuk-link no-visited-state" href="/self-assessment-payment">Change <span class="govuk-visually-hidden">whether you are due to pay a self-assessment payment on account by 31 July 2020</span></a>'
+      }
+    ] if data.answers['self-assessment-payment'] | length,
+    [
+      {
+        text: "Is your business in any of the following sectors:"
+      },
+      {
+        text: data.answers['business-sector'] | getAnswerAsString('business-sector')
+      },
+      {
+        html: '<a class="govuk-link no-visited-state" href="/business-sector">Change <span class="govuk-visually-hidden">whether your business is in a sector</span></a>'
+      }
+    ] if data.answers['business-sector'] | length
+  ]
+}) }}
