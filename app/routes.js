@@ -4,16 +4,17 @@ const express = require('express');
 const router = express.Router();
 
 const Questions = require('./models/questions');
+const Answers = require('./models/answers');
 const Schemes = require('./models/schemes');
 const Outcomes = require('./models/outcomes');
 
-// function checkHasAnswers(req, res, next) {
-//   if (req.session.data.answers === undefined) {
-//     res.redirect(req.baseUrl + '/');
-//   } else {
-//     next();
-//   }
-// }
+function checkHasAnswers(req, res, next) {
+  if (req.session.data.answers === undefined) {
+    res.redirect(req.baseUrl + '/');
+  } else {
+    next();
+  }
+}
 
 // --------------------------------------------------
 // Start
@@ -47,7 +48,7 @@ router.get('/business-location', (req, res) => {
   });
 });
 
-router.post('/business-location', (req, res) => {
+router.post('/business-location', checkHasAnswers, (req, res) => {
   
   let errors = [];
   
@@ -55,7 +56,7 @@ router.post('/business-location', (req, res) => {
     let error = {};
     error.fieldName = 'business-location';
     error.href = '#business-location';
-    error.text = 'Choose a business location';
+    error.text = 'Choose where your business is based';
     errors.push(error);
   }
   
@@ -78,7 +79,7 @@ router.post('/business-location', (req, res) => {
 // --------------------------------------------------
 // Q: What size was your business as of 28 February?
 // --------------------------------------------------
-router.get('/business-size', (req, res) => {
+router.get('/business-size', checkHasAnswers, (req, res) => {
   res.render('question', {
     question: Questions.question('business-size', req.session.data.answers['business-size']),
     actions: {
@@ -89,7 +90,7 @@ router.get('/business-size', (req, res) => {
   });
 });
 
-router.post('/business-size', (req, res) => {
+router.post('/business-size', checkHasAnswers, (req, res) => {
     
   let errors = [];
   
@@ -97,7 +98,7 @@ router.post('/business-size', (req, res) => {
     let error = {};
     error.fieldName = 'business-size';
     error.href = '#business-size';
-    error.text = 'Choose the size of your business';
+    error.text = 'Choose how many employees your business has';
     errors.push(error);
   }
   
@@ -120,7 +121,7 @@ router.post('/business-size', (req, res) => {
 // --------------------------------------------------
 // Q: What is your turnover per year?
 // --------------------------------------------------
-router.get('/annual-turnover', (req, res) => {
+router.get('/annual-turnover', checkHasAnswers, (req, res) => {
   res.render('question', {
     question: Questions.question('annual-turnover', req.session.data.answers['annual-turnover']),
     actions: {
@@ -131,7 +132,7 @@ router.get('/annual-turnover', (req, res) => {
   });
 });
 
-router.post('/annual-turnover', (req, res) => {
+router.post('/annual-turnover', checkHasAnswers, (req, res) => {
     
   let errors = [];
   
@@ -139,7 +140,7 @@ router.post('/annual-turnover', (req, res) => {
     let error = {};
     error.fieldName = 'annual-turnover';
     error.href = '#annual-turnover';
-    error.text = 'Choose your turnover per year';
+    error.text = 'Choose your annual turnover';
     errors.push(error);
   }
   
@@ -162,7 +163,7 @@ router.post('/annual-turnover', (req, res) => {
 // --------------------------------------------------
 // Q: Are you an employer with a PAYE scheme?
 // --------------------------------------------------
-router.get('/paye-scheme', (req, res) => {
+router.get('/paye-scheme', checkHasAnswers, (req, res) => {
   res.render('question', {
     question: Questions.question('paye-scheme', req.session.data.answers['paye-scheme']),
     actions: {
@@ -173,7 +174,7 @@ router.get('/paye-scheme', (req, res) => {
   });
 });
 
-router.post('/paye-scheme', (req, res) => {
+router.post('/paye-scheme', checkHasAnswers, (req, res) => {
     
   let errors = [];
   
@@ -204,7 +205,7 @@ router.post('/paye-scheme', (req, res) => {
 // --------------------------------------------------
 // Q: Are you self-employed?
 // --------------------------------------------------
-router.get('/self-employed', (req, res) => {
+router.get('/self-employed', checkHasAnswers, (req, res) => {
   res.render('question', {
     question: Questions.question('self-employed', req.session.data.answers['self-employed']),
     actions: {
@@ -215,7 +216,7 @@ router.get('/self-employed', (req, res) => {
   });
 });
 
-router.post('/self-employed', (req, res) => {
+router.post('/self-employed', checkHasAnswers, (req, res) => {
     
   let errors = [];
   
@@ -244,9 +245,10 @@ router.post('/self-employed', (req, res) => {
 });
 
 // --------------------------------------------------
-// Q: Does your business have non-domestic property?
+// Q: What is the rateable value of your business' 
+// non-domestic property
 // --------------------------------------------------
-router.get('/non-domestic-property', (req, res) => {
+router.get('/non-domestic-property', checkHasAnswers, (req, res) => {
   res.render('question', {
     question: Questions.question('non-domestic-property', req.session.data.answers['non-domestic-property']),
     actions: {
@@ -257,7 +259,7 @@ router.get('/non-domestic-property', (req, res) => {
   });
 });
 
-router.post('/non-domestic-property', (req, res) => {
+router.post('/non-domestic-property', checkHasAnswers, (req, res) => {
     
   let errors = [];
   
@@ -265,7 +267,7 @@ router.post('/non-domestic-property', (req, res) => {
     let error = {};
     error.fieldName = 'non-domestic-property';
     error.href = '#non-domestic-property';
-    error.text = 'Choose whether your business has a property with a rateable value';
+    error.text = "Choose the rateable value of your business' non-domestic property";
     errors.push(error);
   }
   
@@ -282,7 +284,7 @@ router.post('/non-domestic-property', (req, res) => {
   } else {
     
     if (req.session.data.answers['non-domestic-property'] == 'none') {
-      res.redirect(req.baseUrl + '/business-sectors');
+      res.redirect(req.baseUrl + '/business-sector');
     } else {
       res.redirect(req.baseUrl + '/self-assessment-payment');
     }   
@@ -295,7 +297,13 @@ router.post('/non-domestic-property', (req, res) => {
 // Q: Are you due to pay a self-assessment payment 
 // on account by 31 July 2020?
 // --------------------------------------------------
-router.get('/self-assessment-payment', (req, res) => {
+router.get('/self-assessment-payment', checkHasAnswers, (req, res) => {
+  
+  let back = req.baseUrl + '/non-domestic-property'
+  if (req.headers.referer.includes('rate-relief')) {
+    back = req.baseUrl + '/rate-relief';
+  }
+  
   res.render('question', {
     question: Questions.question('self-assessment-payment', req.session.data.answers['self-assessment-payment']),
     actions: {
@@ -306,7 +314,7 @@ router.get('/self-assessment-payment', (req, res) => {
   });
 });
 
-router.post('/self-assessment-payment', (req, res) => {
+router.post('/self-assessment-payment', checkHasAnswers, (req, res) => {
     
   let errors = [];
   
@@ -337,7 +345,7 @@ router.post('/self-assessment-payment', (req, res) => {
 // --------------------------------------------------
 // Q: What sector is your business in?
 // --------------------------------------------------
-router.get('/business-sector', (req, res) => {
+router.get('/business-sector', checkHasAnswers, (req, res) => {
   res.render('question', {
     question: Questions.question('business-sector', req.session.data.answers['business-sector']),
     actions: {
@@ -348,7 +356,7 @@ router.get('/business-sector', (req, res) => {
   });
 });
 
-router.post('/business-sector', (req, res) => {
+router.post('/business-sector', checkHasAnswers, (req, res) => {
     
   let errors = [];
   
@@ -357,7 +365,7 @@ router.post('/business-sector', (req, res) => {
     let error = {};
     error.fieldName = 'business-sector';
     error.href = '#business-sector';
-    error.text = 'Choose a business sector';
+    error.text = 'Choose whether your business in one of the following sectors'; // in any of
     errors.push(error);
   }
   
@@ -382,7 +390,7 @@ router.post('/business-sector', (req, res) => {
 // rate relief or rural rate relief as of the 11 March 
 // 2020?
 // --------------------------------------------------
-router.get('/rate-relief', (req, res) => {
+router.get('/rate-relief', checkHasAnswers, (req, res) => {
   res.render('question', {
     question: Questions.question('rate-relief', req.session.data.answers['rate-relief']),
     actions: {
@@ -393,7 +401,7 @@ router.get('/rate-relief', (req, res) => {
   });
 });
 
-router.post('/rate-relief', (req, res) => {
+router.post('/rate-relief', checkHasAnswers, (req, res) => {
 
   let errors = [];
 
@@ -416,7 +424,7 @@ router.post('/rate-relief', (req, res) => {
       }
     });
   } else {
-    res.redirect(req.baseUrl + '/results');
+    res.redirect(req.baseUrl + '/self-assessment-payment');
   }  
 
 });
@@ -424,21 +432,29 @@ router.post('/rate-relief', (req, res) => {
 // --------------------------------------------------
 // results 
 // --------------------------------------------------
-router.get('/results', (req, res) => {
-  
-  let back = req.baseUrl + '/self-assessment-payment'
-  if (req.session.data.answers['non-domestic-property'] == 'none') {
-    back = req.baseUrl + '/rate-relief';
-  }  
+router.get('/results', checkHasAnswers, (req, res) => {
   
   res.render('results', {
     schemes: Schemes.find(),
     outcomes: Outcomes.find(req.session.data.answers),
     actions: {
       start: req.baseUrl + '/business-location',
-      back: back
+      back: req.baseUrl + '/self-assessment-payment'
     }
   });
+  
+});
+
+// --------------------------------------------------
+// change answers
+// --------------------------------------------------
+router.get('/change-answer', checkHasAnswers, (req, res) => {
+  
+  // remove answers from the object
+  // we only want to keep answers from earlier questions 
+  req.session.data.answers = Answers.delete(req.query.question, req.session.data.answers);
+  
+  res.redirect(req.baseUrl + '/' + req.query.question);
   
 });
 
