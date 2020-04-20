@@ -184,7 +184,7 @@ router.post('/paye-scheme', checkHasAnswers, (req, res) => {
   if (req.session.data.answers['paye-scheme'] === undefined) {
     let error = {};
     error.fieldName = 'paye-scheme';
-    error.href = '#annual-turnover';
+    error.href = '#paye-scheme';
     error.text = 'Choose whether you are an employer with a PAYE scheme';
     errors.push(error);
   }
