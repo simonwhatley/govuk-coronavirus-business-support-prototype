@@ -18,8 +18,10 @@ $govuk-assets-path: '/govuk/assets/';
 @import "components/breadcrumbs";
 @import "components/cookie-banner";
 @import "components/covid";
+@import "components/global-bar";
 @import "components/govspeak";
 @import "components/headings";
+@import "components/markdown";
 @import "components/title";
 
 // Objects
@@ -27,5 +29,8 @@ $govuk-assets-path: '/govuk/assets/';
 
 // Core
 @import "core/links";
+
+// Utilities
+@import "utilities/overwrites";
 
 // Add extra styles here, or re-organise the Sass files in whichever way makes most sense to you

@@ -17,6 +17,8 @@ exports.question = function(question_id, answer_value) {
   
     question.items.forEach((item) => {
       
+      item.checked = false;
+      
       if (question.type == 'single') {
         if (item.value == answer_value) {
           item.checked = true;
@@ -31,8 +33,8 @@ exports.question = function(question_id, answer_value) {
       
     });
     
-  } 
+  }
   
   return question;
-    
+
 }
