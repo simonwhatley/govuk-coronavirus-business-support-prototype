@@ -14,7 +14,10 @@ exports.delete = function(question_id, answers) {
   
   // remove questions from the array
   // we only want to keep answers from earlier questions
-  q.splice((index+1),(q.length-index));
+  console.log(index);
+  console.log(q.length);
+  
+  q.splice((index+1), q.length);
   
   let a = {}
   

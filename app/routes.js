@@ -1,3 +1,5 @@
+// Based on https://github.com/alphagov/smart-answers/blob/master/lib/smart_answer_flows/business-coronavirus-support-finder.rb
+
 'use strict'
 
 const express = require('express');
@@ -6,7 +8,7 @@ const router = express.Router();
 const Questions = require('./models/questions');
 const Answers = require('./models/answers');
 const Schemes = require('./models/schemes');
-const Outcomes = require('./models/outcomes');
+const Rules = require('./models/rules');
 
 function checkHasAnswers(req, res, next) {
   if (req.session.data.answers === undefined) {
@@ -21,7 +23,8 @@ function checkHasAnswers(req, res, next) {
 // --------------------------------------------------
 
 router.get('/', (req, res) => {
-  delete req.session.data;  
+  delete req.session.data;
+  
   res.render('index', {
     actions: {
       start: req.baseUrl + '/business-location'
@@ -283,61 +286,14 @@ router.post('/non-domestic-property', checkHasAnswers, (req, res) => {
     });
   } else {
     
-    if (req.session.data.answers['non-domestic-property'] == 'none') {
+    if (req.session.data.answers['non-domestic-property'] != 'none') {
       res.redirect(req.baseUrl + '/business-sector');
     } else {
+      delete req.session.data.answers['business-sector'];
+      delete req.session.data.answers['rate-relief'];
       res.redirect(req.baseUrl + '/self-assessment-payment');
     }   
     
-  }  
-  
-});
-
-// --------------------------------------------------
-// Q: Are you due to pay a self-assessment payment 
-// on account by 31 July 2020?
-// --------------------------------------------------
-router.get('/self-assessment-payment', checkHasAnswers, (req, res) => {
-  
-  let back = req.baseUrl + '/non-domestic-property'
-  if (req.headers.referer.includes('rate-relief')) {
-    back = req.baseUrl + '/rate-relief';
-  }
-  
-  res.render('question', {
-    question: Questions.question('self-assessment-payment', req.session.data.answers['self-assessment-payment']),
-    actions: {
-      save: req.baseUrl + '/self-assessment-payment',
-      back: req.baseUrl + '/non-domestic-property',
-      start: req.baseUrl + '/business-location'
-    }
-  });
-});
-
-router.post('/self-assessment-payment', checkHasAnswers, (req, res) => {
-    
-  let errors = [];
-  
-  if (req.session.data.answers['self-assessment-payment'] === undefined) {
-    let error = {};
-    error.fieldName = 'self-assessment-payment';
-    error.href = '#self-assessment-payment';
-    error.text = 'Choose whether you are able to pay a self-assessment payment on account by 31 July 2020';
-    errors.push(error);
-  }
-  
-  if (errors.length) {
-    res.render('question', {
-      question: Questions.question('self-assessment-payment', req.session.data.answers['self-assessment-payment']),
-      errors: errors,
-      actions: {
-        save: req.baseUrl + '/self-assessment-payment',
-        back: req.baseUrl + '/non-domestic-property',
-        start: req.baseUrl + '/business-location'
-      }
-    });
-  } else {
-    res.redirect(req.baseUrl + '/results');
   }  
   
 });
@@ -394,7 +350,7 @@ router.get('/rate-relief', checkHasAnswers, (req, res) => {
   res.render('question', {
     question: Questions.question('rate-relief', req.session.data.answers['rate-relief']),
     actions: {
-      save: req.baseUrl + '/',
+      save: req.baseUrl + '/rate-relief',
       back: req.baseUrl + '/business-sector',
       start: req.baseUrl + '/business-location'
     }
@@ -430,13 +386,67 @@ router.post('/rate-relief', checkHasAnswers, (req, res) => {
 });
 
 // --------------------------------------------------
+// Q: Are you due to pay a self-assessment payment 
+// on account by 31 July 2020?
+// --------------------------------------------------
+router.get('/self-assessment-payment', checkHasAnswers, (req, res) => {
+  
+  let back = req.baseUrl + '/non-domestic-property'
+  if(req.session.data.answers['non-domestic-property'] != 'none') {
+    back = req.baseUrl + '/rate-relief';
+  }
+  
+  res.render('question', {
+    question: Questions.question('self-assessment-payment', req.session.data.answers['self-assessment-payment']),
+    actions: {
+      save: req.baseUrl + '/self-assessment-payment',
+      back: back,
+      start: req.baseUrl + '/business-location'
+    }
+  });
+});
+
+router.post('/self-assessment-payment', checkHasAnswers, (req, res) => {
+  
+  let back = req.baseUrl + '/non-domestic-property'
+  if(req.session.data.answers['non-domestic-property'] != 'none') {
+    back = req.baseUrl + '/rate-relief';
+  }
+    
+  let errors = [];
+  
+  if (req.session.data.answers['self-assessment-payment'] === undefined) {
+    let error = {};
+    error.fieldName = 'self-assessment-payment';
+    error.href = '#self-assessment-payment';
+    error.text = 'Choose whether you are able to pay a self-assessment payment on account by 31 July 2020';
+    errors.push(error);
+  }
+  
+  if (errors.length) {
+    res.render('question', {
+      question: Questions.question('self-assessment-payment', req.session.data.answers['self-assessment-payment']),
+      errors: errors,
+      actions: {
+        save: req.baseUrl + '/self-assessment-payment',
+        back: back,
+        start: req.baseUrl + '/business-location'
+      }
+    });
+  } else {
+    res.redirect(req.baseUrl + '/results');
+  }  
+  
+});
+
+// --------------------------------------------------
 // results 
 // --------------------------------------------------
 router.get('/results', checkHasAnswers, (req, res) => {
   
   res.render('results', {
     schemes: Schemes.find(),
-    outcomes: Outcomes.find(req.session.data.answers),
+    rules: Rules.find(req.session.data.answers),
     actions: {
       start: req.baseUrl + '/business-location',
       back: req.baseUrl + '/self-assessment-payment'

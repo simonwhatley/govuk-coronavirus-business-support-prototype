@@ -28,7 +28,7 @@
     <div class="app-c-govspeak app-c-markdown">
       
       {%- for scheme in schemes %}
-        {%- if scheme.id in outcomes %}
+        {%- if scheme.id in rules %}
         <div class="call-to-action">
           {{ scheme.description | markdownToHtml | safe }}
         </div>

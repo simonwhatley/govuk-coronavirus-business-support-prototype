@@ -86,17 +86,6 @@
     ] if data.answers['non-domestic-property'] | length,
     [
       {
-        text: "Are you due to pay a self-assessment payment on account by 31 July 2020?"
-      },
-      {
-        text: data.answers['self-assessment-payment'] | getAnswerAsString('self-assessment-payment')
-      },
-      {
-        html: '<a class="govuk-link no-visited-state" href="/change-answer?question=self-assessment-payment">Change <span class="govuk-visually-hidden">whether you are due to pay a self-assessment payment on account by 31 July 2020</span></a>'
-      }
-    ] if data.answers['self-assessment-payment'] | length,
-    [
-      {
         text: "Is your business in any of the following sectors:"
       },
       {
@@ -114,8 +103,19 @@
         text: data.answers['rate-relief'] | getAnswerAsString('rate-relief')
       },
       {
-        html: '<a class="govuk-link no-visited-state" href="/change-answer?question=business-sector">Change <span class="govuk-visually-hidden">whether your business is in receipt of small business rate relief or rural rate relief as of the 11 March 2020</span></a>'
+        html: '<a class="govuk-link no-visited-state" href="/change-answer?question=rate-relief">Change <span class="govuk-visually-hidden">whether your business is in receipt of small business rate relief or rural rate relief as of the 11 March 2020</span></a>'
       }
-    ] if data.answers['rate-relief'] | length
+    ] if data.answers['rate-relief'] | length,
+    [
+      {
+        text: "Are you due to pay a self-assessment payment on account by 31 July 2020?"
+      },
+      {
+        text: data.answers['self-assessment-payment'] | getAnswerAsString('self-assessment-payment')
+      },
+      {
+        html: '<a class="govuk-link no-visited-state" href="/change-answer?question=self-assessment-payment">Change <span class="govuk-visually-hidden">whether you are due to pay a self-assessment payment on account by 31 July 2020</span></a>'
+      }
+    ] if data.answers['self-assessment-payment'] | length
   ]
 }) }}

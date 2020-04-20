@@ -88,13 +88,13 @@ $covid-grey: #262828;
   display: inline-block;
 }
 
-.gem-c-govspeak .global-bar__heading {
+.app-c-govspeak .global-bar__heading {
   @include govuk-font(19, $weight: bold);
   margin-top: 0;
   margin-bottom: govuk-spacing(1);
 }
 
-.gem-c-govspeak .global-bar__list {
+.app-c-govspeak .global-bar__list {
   margin-top: 0;
 }
 

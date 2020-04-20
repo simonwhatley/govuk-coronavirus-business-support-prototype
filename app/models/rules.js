@@ -1,3 +1,5 @@
+// Based on https://github.com/alphagov/smart-answers/blob/master/lib/smart_answer/calculators/business_coronavirus_support_finder_calculator.rb
+
 exports.find = function(answers) {
   if (!answers)
     return null
