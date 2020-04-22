@@ -8,7 +8,7 @@ $covid-yellow: #ffe114;
 $covid-grey: #262828;
 
 .global-bar {
-  @include govuk-font(19);  
+  @include govuk-font(19);
   background-color: govuk-colour("black");
   border-top: govuk-spacing(2) solid $covid-yellow;
   border-bottom: 1px solid govuk-colour("white");
@@ -61,8 +61,8 @@ $covid-grey: #262828;
   box-sizing: border-box;
   padding-left: 50px;
   min-height: 45px;
-  background-image: image-url("covid-arrow.png"); // PNG fallback for SVG
-  background-image: image-url("covid-arrow.svg");
+  background-image: url("/public/images/covid-arrow.png"); // PNG fallback for SVG
+  background-image: url("/public/images/covid-arrow.svg");
   background-repeat: no-repeat;
   background-position: 0 50%;
   background-size: 37px auto;
@@ -126,7 +126,6 @@ $covid-grey: #262828;
   margin-bottom: govuk-spacing(1);
   right: 0;
   bottom: 0;
-
 
   @include govuk-media-query($until: desktop) {
     display: none;
