@@ -2,6 +2,11 @@
   border-bottom: 0 !important;
 }
 
+.govuk-header__logo {
+  margin-bottom: 0 !important;
+  padding-bottom: govuk-spacing(2) !important;
+}
+
 .govuk-header__container--no-border-bottom {
   margin-bottom: 0 !important;
   border-bottom: 0 !important;
