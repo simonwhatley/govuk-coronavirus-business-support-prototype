@@ -162,6 +162,18 @@ exports.find = function(answers) {
   }
 
   // --------------------------------------------------
+  // bounce_back_loan
+  // --------------------------------------------------
+
+  if (answers['annual-turnover'] !== undefined) {
+
+    if (answers['annual-turnover'] == 'under_85k' || answers['annual-turnover'] == '85k_to_45m') {
+      outcomes.push('bounce_back_loan');
+    }
+
+  }
+
+  // --------------------------------------------------
   // time_to_pay_service
   // --------------------------------------------------
 
