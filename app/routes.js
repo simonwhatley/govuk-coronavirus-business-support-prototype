@@ -24,7 +24,7 @@ function checkHasAnswers(req, res, next) {
 
 router.get('/', (req, res) => {
   delete req.session.data;
-  
+
   res.render('index', {
     actions: {
       start: req.baseUrl + '/business-location'
@@ -36,11 +36,11 @@ router.get('/', (req, res) => {
 // Q: Where is your business based?
 // --------------------------------------------------
 router.get('/business-location', (req, res) => {
-  
+
   if (req.session.data.answers === undefined) {
     req.session.data.answers = {};
   }
-  
+
   res.render('question', {
     question: Questions.question('business-location', req.session.data.answers['business-location']),
     actions: {
@@ -52,9 +52,9 @@ router.get('/business-location', (req, res) => {
 });
 
 router.post('/business-location', checkHasAnswers, (req, res) => {
-  
+
   let errors = [];
-  
+
   if (req.session.data.answers['business-location'] === undefined) {
     let error = {};
     error.fieldName = 'business-location';
@@ -62,7 +62,7 @@ router.post('/business-location', checkHasAnswers, (req, res) => {
     error.text = 'Choose where your business is based';
     errors.push(error);
   }
-  
+
   if (errors.length) {
     res.render('question', {
       question: Questions.question('business-location', req.session.data.answers['business-location']),
@@ -75,8 +75,8 @@ router.post('/business-location', checkHasAnswers, (req, res) => {
     });
   } else {
     res.redirect(req.baseUrl + '/business-size');
-  }  
-  
+  }
+
 });
 
 // --------------------------------------------------
@@ -94,9 +94,9 @@ router.get('/business-size', checkHasAnswers, (req, res) => {
 });
 
 router.post('/business-size', checkHasAnswers, (req, res) => {
-    
+
   let errors = [];
-  
+
   if (req.session.data.answers['business-size'] === undefined) {
     let error = {};
     error.fieldName = 'business-size';
@@ -104,7 +104,7 @@ router.post('/business-size', checkHasAnswers, (req, res) => {
     error.text = 'Choose how many employees your business has';
     errors.push(error);
   }
-  
+
   if (errors.length) {
     res.render('question', {
       question: Questions.question('business-size', req.session.data.answers['business-size']),
@@ -117,8 +117,8 @@ router.post('/business-size', checkHasAnswers, (req, res) => {
     });
   } else {
     res.redirect(req.baseUrl + '/annual-turnover');
-  }  
-  
+  }
+
 });
 
 // --------------------------------------------------
@@ -136,9 +136,9 @@ router.get('/annual-turnover', checkHasAnswers, (req, res) => {
 });
 
 router.post('/annual-turnover', checkHasAnswers, (req, res) => {
-    
+
   let errors = [];
-  
+
   if (req.session.data.answers['annual-turnover'] === undefined) {
     let error = {};
     error.fieldName = 'annual-turnover';
@@ -146,7 +146,7 @@ router.post('/annual-turnover', checkHasAnswers, (req, res) => {
     error.text = 'Choose your annual turnover';
     errors.push(error);
   }
-  
+
   if (errors.length) {
     res.render('question', {
       question: Questions.question('annual-turnover', req.session.data.answers['annual-turnover']),
@@ -159,8 +159,8 @@ router.post('/annual-turnover', checkHasAnswers, (req, res) => {
     });
   } else {
     res.redirect(req.baseUrl + '/paye-scheme');
-  }  
-  
+  }
+
 });
 
 // --------------------------------------------------
@@ -178,9 +178,9 @@ router.get('/paye-scheme', checkHasAnswers, (req, res) => {
 });
 
 router.post('/paye-scheme', checkHasAnswers, (req, res) => {
-    
+
   let errors = [];
-  
+
   if (req.session.data.answers['paye-scheme'] === undefined) {
     let error = {};
     error.fieldName = 'paye-scheme';
@@ -188,7 +188,7 @@ router.post('/paye-scheme', checkHasAnswers, (req, res) => {
     error.text = 'Choose whether you are an employer with a PAYE scheme';
     errors.push(error);
   }
-  
+
   if (errors.length) {
     res.render('question', {
       question: Questions.question('paye-scheme', req.session.data.answers['paye-scheme']),
@@ -201,8 +201,8 @@ router.post('/paye-scheme', checkHasAnswers, (req, res) => {
     });
   } else {
     res.redirect(req.baseUrl + '/self-employed');
-  }  
-  
+  }
+
 });
 
 // --------------------------------------------------
@@ -220,9 +220,9 @@ router.get('/self-employed', checkHasAnswers, (req, res) => {
 });
 
 router.post('/self-employed', checkHasAnswers, (req, res) => {
-    
+
   let errors = [];
-  
+
   if (req.session.data.answers['self-employed'] === undefined) {
     let error = {};
     error.fieldName = 'self-employed';
@@ -230,7 +230,7 @@ router.post('/self-employed', checkHasAnswers, (req, res) => {
     error.text = 'Choose whether you are self-employed';
     errors.push(error);
   }
-  
+
   if (errors.length) {
     res.render('question', {
       question: Questions.question('self-employed', req.session.data.answers['self-employed']),
@@ -243,12 +243,12 @@ router.post('/self-employed', checkHasAnswers, (req, res) => {
     });
   } else {
     res.redirect(req.baseUrl + '/non-domestic-property');
-  }  
-  
+  }
+
 });
 
 // --------------------------------------------------
-// Q: What is the rateable value of your business' 
+// Q: What is the rateable value of your business'
 // non-domestic property
 // --------------------------------------------------
 router.get('/non-domestic-property', checkHasAnswers, (req, res) => {
@@ -263,9 +263,9 @@ router.get('/non-domestic-property', checkHasAnswers, (req, res) => {
 });
 
 router.post('/non-domestic-property', checkHasAnswers, (req, res) => {
-    
+
   let errors = [];
-  
+
   if (req.session.data.answers['non-domestic-property'] === undefined) {
     let error = {};
     error.fieldName = 'non-domestic-property';
@@ -273,7 +273,7 @@ router.post('/non-domestic-property', checkHasAnswers, (req, res) => {
     error.text = "Choose the rateable value of your business' non-domestic property";
     errors.push(error);
   }
-  
+
   if (errors.length) {
     res.render('question', {
       question: Questions.question('non-domestic-property', req.session.data.answers['non-domestic-property']),
@@ -285,17 +285,17 @@ router.post('/non-domestic-property', checkHasAnswers, (req, res) => {
       }
     });
   } else {
-    
+
     if (req.session.data.answers['non-domestic-property'] != 'none') {
       res.redirect(req.baseUrl + '/business-sector');
     } else {
       delete req.session.data.answers['business-sector'];
       delete req.session.data.answers['rate-relief'];
       res.redirect(req.baseUrl + '/self-assessment-payment');
-    }   
-    
-  }  
-  
+    }
+
+  }
+
 });
 
 // --------------------------------------------------
@@ -313,9 +313,9 @@ router.get('/business-sector', checkHasAnswers, (req, res) => {
 });
 
 router.post('/business-sector', checkHasAnswers, (req, res) => {
-    
+
   let errors = [];
-  
+
   // if (!req.session.data.answers['business-sector'].length) {
   if (req.session.data.answers['business-sector'] === undefined) {
     let error = {};
@@ -324,7 +324,7 @@ router.post('/business-sector', checkHasAnswers, (req, res) => {
     error.text = 'Choose whether your business in one of the following sectors'; // in any of
     errors.push(error);
   }
-  
+
   if (errors.length) {
     res.render('question', {
       question: Questions.question('business-sector', req.session.data.answers['business-sector']),
@@ -337,13 +337,13 @@ router.post('/business-sector', checkHasAnswers, (req, res) => {
     });
   } else {
     res.redirect(req.baseUrl + '/rate-relief');
-  }  
-  
+  }
+
 });
 
 // --------------------------------------------------
-// Q: Is your business in receipt of small business 
-// rate relief or rural rate relief as of the 11 March 
+// Q: Is your business in receipt of small business
+// rate relief or rural rate relief as of the 11 March
 // 2020?
 // --------------------------------------------------
 router.get('/rate-relief', checkHasAnswers, (req, res) => {
@@ -381,21 +381,21 @@ router.post('/rate-relief', checkHasAnswers, (req, res) => {
     });
   } else {
     res.redirect(req.baseUrl + '/self-assessment-payment');
-  }  
+  }
 
 });
 
 // --------------------------------------------------
-// Q: Are you due to pay a self-assessment payment 
+// Q: Are you due to pay a self-assessment payment
 // on account by 31 July 2020?
 // --------------------------------------------------
 router.get('/self-assessment-payment', checkHasAnswers, (req, res) => {
-  
+
   let back = req.baseUrl + '/non-domestic-property'
   if(req.session.data.answers['non-domestic-property'] != 'none') {
     back = req.baseUrl + '/rate-relief';
   }
-  
+
   res.render('question', {
     question: Questions.question('self-assessment-payment', req.session.data.answers['self-assessment-payment']),
     actions: {
@@ -407,14 +407,14 @@ router.get('/self-assessment-payment', checkHasAnswers, (req, res) => {
 });
 
 router.post('/self-assessment-payment', checkHasAnswers, (req, res) => {
-  
+
   let back = req.baseUrl + '/non-domestic-property'
   if(req.session.data.answers['non-domestic-property'] != 'none') {
     back = req.baseUrl + '/rate-relief';
   }
-    
+
   let errors = [];
-  
+
   if (req.session.data.answers['self-assessment-payment'] === undefined) {
     let error = {};
     error.fieldName = 'self-assessment-payment';
@@ -422,7 +422,7 @@ router.post('/self-assessment-payment', checkHasAnswers, (req, res) => {
     error.text = 'Choose whether you are able to pay a self-assessment payment on account by 31 July 2020';
     errors.push(error);
   }
-  
+
   if (errors.length) {
     res.render('question', {
       question: Questions.question('self-assessment-payment', req.session.data.answers['self-assessment-payment']),
@@ -435,15 +435,15 @@ router.post('/self-assessment-payment', checkHasAnswers, (req, res) => {
     });
   } else {
     res.redirect(req.baseUrl + '/results');
-  }  
-  
+  }
+
 });
 
 // --------------------------------------------------
-// results 
+// results
 // --------------------------------------------------
 router.get('/results', checkHasAnswers, (req, res) => {
-  
+
   res.render('results', {
     schemes: Schemes.find(),
     rules: Rules.find(req.session.data.answers),
@@ -452,20 +452,20 @@ router.get('/results', checkHasAnswers, (req, res) => {
       back: req.baseUrl + '/self-assessment-payment'
     }
   });
-  
+
 });
 
 // --------------------------------------------------
 // change answers
 // --------------------------------------------------
 router.get('/change-answer', checkHasAnswers, (req, res) => {
-  
+
   // remove answers from the object
-  // we only want to keep answers from earlier questions 
+  // we only want to keep answers from earlier questions
   req.session.data.answers = Answers.delete(req.query.question, req.session.data.answers);
-  
+
   res.redirect(req.baseUrl + '/' + req.query.question);
-  
+
 });
 
 // --------------------------------------------------
