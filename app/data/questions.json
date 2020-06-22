@@ -60,6 +60,10 @@
       {
         "value": "under_85k",
         "text": "Under £85,000"
+      },
+      {
+        "value": "pre_revenue",
+        "text": "My business is a start-up and is pre-revenue"
       }
     ]
   },
@@ -83,6 +87,7 @@
     "id": "self-employed",
     "name": "answers[self-employed]",
     "title": "Are you self-employed?",
+    "hint": "For this question, limited company directors are not considered self-employed.",
     "type": "single",
     "items": [
       {
@@ -99,6 +104,7 @@
     "id": "non-domestic-property",
     "name": "answers[non-domestic-property]",
     "title": "What is the rateable value of your business' non-domestic property?",
+    "hint": "The rateable value of your property is used by your local council to calculate your business rates bill.",
     "type": "single",
     "items": [
       {
