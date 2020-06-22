@@ -138,6 +138,22 @@ exports.find = function(answers) {
   }
 
   // --------------------------------------------------
+  // discretionary_grant
+  // --------------------------------------------------
+
+  if (answers['business-location'] !== undefined
+      && answers['business-size'] !== undefined
+      && answers['annual-turnover'] !== undefined) {
+
+    if (answers['business-location'] == 'england'
+        && answers['business-size'] == '0_to_249'
+        && (answers['annual-turnover'] == 'under_85k' || answers['annual-turnover'] == '85k_to_45m')) {
+      outcomes.push('discretionary_grant');
+    }
+
+  }
+
+  // --------------------------------------------------
   // business_loan_scheme
   // --------------------------------------------------
 
@@ -169,6 +185,18 @@ exports.find = function(answers) {
 
     if (answers['annual-turnover'] == 'under_85k' || answers['annual-turnover'] == '85k_to_45m') {
       outcomes.push('bounce_back_loan');
+    }
+
+  }
+
+  // --------------------------------------------------
+  // future_fund
+  // --------------------------------------------------
+
+  if (answers['annual-turnover'] !== undefined) {
+
+    if (answers['annual-turnover'] == 'pre_revenue') {
+      outcomes.push('future_fund');
     }
 
   }
